@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">MindWave logger</string>
+  <string name="connect">Подключить гарнитуру</string>
+  <string name="disconnect">Отключить гарнитуру</string>
+  <string name="waiting_for_meditation_signal">Медитация: нет данных</string>
+  <string name="waiting_for_attention_signal">Внимание: нет данных</string>
+  <string name="waiting_for_state">Ожидаю подключение гарнитуры...</string>
+</resources>
