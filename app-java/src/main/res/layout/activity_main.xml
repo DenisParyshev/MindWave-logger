@@ -20,7 +20,7 @@
         android:textStyle="bold"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="13dp" />
     <TextView
         android:id="@+id/tv_state"
         android:layout_width="match_parent"
@@ -29,25 +29,10 @@
         android:layout_marginRight="15dp"
         android:text="@string/waiting_for_state" />
     <TextView
-        android:id="@+id/tv_attention"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/waiting_for_attention_signal"/>
-    <TextView
-        android:id="@+id/tv_meditation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:text="@string/waiting_for_meditation_signal" />
-    <TextView
         android:id="@+id/label1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:text="Данные тестируемого"
@@ -72,7 +57,18 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:hint="Возраст"
-        android:inputType="numberDecimal"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColorHint="#333"
+        android:textSize="14dp" />
+    <EditText
+        android:id="@+id/txtProf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:hint="Род занятий"
+        android:inputType="text"
         android:textAlignment="center"
         android:textColorHint="#333"
         android:textSize="14dp" />
@@ -80,7 +76,7 @@
         android:id="@+id/label2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:text="Тест"
@@ -116,13 +112,28 @@
         android:id="@+id/label2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:text="Измерение"
         android:textStyle="bold"
         android:textSize="14dp"
         android:textColor="#000"/>
+    <TextView
+        android:id="@+id/tv_attention"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/waiting_for_attention_signal"/>
+    <TextView
+        android:id="@+id/tv_meditation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/waiting_for_meditation_signal" />
     <TextView
         android:id="@+id/txtTask"
         android:layout_width="match_parent"
@@ -148,6 +159,23 @@
         android:layout_marginTop="10dp"
         android:text="Завершить измерение"
         android:enabled="false"/>
+    <EditText
+        android:id="@+id/txtMarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:hint="Заметки"
+        android:textColorHint="#333"
+        android:minLines="4"
+        android:maxLines="4"
+        android:gravity="top"
+        android:textSize="14dp"
+        android:textColor="#000"
+        />
+
+
   </LinearLayout>
 
 

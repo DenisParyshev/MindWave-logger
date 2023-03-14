@@ -3,8 +3,6 @@ package com.github.pwittchen.neurosky.app;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,20 +26,19 @@ import com.github.pwittchen.neurosky.library.message.enums.BrainWave;
 import com.github.pwittchen.neurosky.library.message.enums.Signal;
 import com.github.pwittchen.neurosky.library.message.enums.State;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import android.os.Environment;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
   Button btnTaskStop;
   EditText txtFIO;
   EditText txtAge;
+  EditText txtMarks;
+  EditText txtProf;
 
   @BindView(R.id.tv_state) TextView tvState;
   @BindView(R.id.tv_attention) TextView tvAttention;
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
           try {
             neuroSky.connect();
             neuroSky.start();
-            btnTestStart.setEnabled(btnConnect.isChecked());
+            tvState.setText("Гарнитура подключена");
           } catch (BluetoothNotEnabledException e) {
             btnConnect.setChecked(false);
             tvState.setText("Включите Bluetooth");
@@ -106,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
           // disconnect
           neuroSky.stop();
           neuroSky.disconnect();
-          tvState.setText("Ожидаю подключение гарнитуры...");
+          tvState.setText("Подключите гарнитуру...");
           tvAttention.setText("Внимание: нет данных");
           tvMeditation.setText("Медитация: нет данных");
         }
-        btnTestStart.setEnabled(b);
+        btnTestStart.setEnabled(btnConnect.isChecked());
       }
     });
 
@@ -126,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
     btnTaskStop = findViewById(R.id.btnTaskStop);
     txtFIO = findViewById(R.id.txtFIO);
     txtAge = findViewById(R.id.txtAge);
+    txtMarks = findViewById(R.id.txtMarks);
+    txtProf = findViewById(R.id.txtProf);
 
     // set enables
     setButtonsEnable();
@@ -146,6 +147,10 @@ public class MainActivity extends AppCompatActivity {
           Toast.makeText(MainActivity.this, "Укажите возраст!", Toast.LENGTH_LONG).show();
           return;
         }
+        if (txtProf.getText().toString().trim().equals("")) {
+          Toast.makeText(MainActivity.this, "Укажите род деятельности!", Toast.LENGTH_LONG).show();
+          return;
+        }
         nTestNum = 1;
         bMode = true;
         bSave = false;
@@ -158,12 +163,22 @@ public class MainActivity extends AppCompatActivity {
         }
         File sdPath = Environment.getExternalStorageDirectory();
         sdPath = new File(sdPath.getAbsolutePath() + "/MindWave/");
+        // get current time
+        Date currentDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
+        String dateText = dateFormat.format(currentDate);
+
         File sdFileRaw = new File(sdPath, cFileRaw);
         try {
           BufferedWriter bw = new BufferedWriter(new FileWriter(sdFileRaw, true));
           bw.write("Name;" + txtFIO.getText().toString());
           bw.write("\n");
           bw.write("Age;" + txtAge.getText().toString());
+          bw.write("\n");
+          bw.write("Profession;" + txtProf.getText().toString());
+          bw.write("\n");
+          bw.write("Start time;" + dateText);
+          bw.write("\n");
           bw.write("\n");
           bw.write("Number;Time;Attention;Meditation");
           bw.write("\n");
@@ -177,6 +192,11 @@ public class MainActivity extends AppCompatActivity {
           bw.write("Name;" + txtFIO.getText().toString());
           bw.write("\n");
           bw.write("Age;" + txtAge.getText().toString());
+          bw.write("\n");
+          bw.write("Profession;" + txtProf.getText().toString());
+          bw.write("\n");
+          bw.write("Start time;" + dateText);
+          bw.write("\n");
           bw.write("\n");
           bw.write("Number;Time;Attention;Meditation");
           bw.write("\n");
@@ -194,6 +214,35 @@ public class MainActivity extends AppCompatActivity {
         bMode = false;
         bSave = false;
         setButtonsEnable();
+        File sdPath = Environment.getExternalStorageDirectory();
+        sdPath = new File(sdPath.getAbsolutePath() + "/MindWave/");
+        // get current time
+        Date currentDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
+        String dateText = dateFormat.format(currentDate);
+        File sdFileRaw = new File(sdPath, cFileRaw);
+        try {
+          BufferedWriter bw = new BufferedWriter(new FileWriter(sdFileRaw, true));
+          bw.write("\n");
+          bw.write("Finish time;" + dateText);
+          bw.write("\n");
+          bw.write("Marks;" + txtMarks.getText().toString());
+          bw.close();
+        } catch (IOException e) {
+          return;
+        }
+        File sdFileCSV = new File(sdPath, cFileCSV);
+        try {
+          BufferedWriter bw = new BufferedWriter(new FileWriter(sdFileCSV, true));
+          bw.write("\n");
+          bw.write("Finish time;" + dateText);
+          bw.write("\n");
+          bw.write("\n");
+          bw.write("Marks;" + txtMarks.getText().toString());
+          bw.close();
+        } catch (IOException e) {
+          return;
+        }
       }
     });
     btnTaskStart.setOnClickListener(new View.OnClickListener() {
